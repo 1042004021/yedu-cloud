@@ -213,7 +213,7 @@ function createApp(config, storageService, workRepository) {
   app.get('/health', (req, res) => {
     res.json({
       ok: true,
-      service: 'yedu-storage-signer',
+      service: 'yedu-cloud',
       driver: storageService.driver,
       privateBucket: config.driver === 'qiniu' ? config.privateBucket : true,
       time: new Date().toISOString(),
@@ -459,7 +459,7 @@ function createApp(config, storageService, workRepository) {
     if (err && err.type === 'entity.too.large') {
       return res.status(413).json({ error: '请求体过大' });
     }
-    console.error('[yedu-signer]', err);
+    console.error('[yedu-cloud]', err);
     res.status(500).json({ error: '服务内部错误' });
   });
 

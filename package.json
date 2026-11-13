@@ -1,8 +1,9 @@
 {
-  "name": "yedu-qiniu-signer",
+  "name": "yedu-cloud",
   "version": "1.0.0",
   "private": true,
-  "description": "夜读七牛云上传 Token 与私有下载签名服务",
+  "license": "Apache-2.0",
+  "description": "Yedu Cloud 夜读云作品库与对象存储签名服务",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",

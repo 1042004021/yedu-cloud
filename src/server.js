@@ -13,12 +13,12 @@ const workRepository = createWorkRepository(db);
 const app = createApp(config, storageService, workRepository);
 const server = app.listen(config.port, () => {
   console.log(
-    `[yedu-signer] listening on :${config.port} driver=${storageService.driver} bucket=${config.bucket}`,
+    `[yedu-cloud] listening on :${config.port} driver=${storageService.driver} bucket=${config.bucket}`,
   );
 });
 
 function shutdown(signal) {
-  console.log(`[yedu-signer] ${signal}, shutting down`);
+  console.log(`[yedu-cloud] ${signal}, shutting down`);
   server.close(() => {
     db.close();
     process.exit(0);
