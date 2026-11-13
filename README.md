@@ -150,7 +150,7 @@ Content-Type: application/json
 
 - `script` 必传；
 - `cover`、`pack` 可选；
-- `size` 必须是真实文件字节数，服务端会限制 `MAX_UPLOAD_BYTES`；
+- `size` 必须是真实文件字节数，服务端默认限制单文件 512MB（可通过 `MAX_UPLOAD_BYTES` 调整）；
 - 服务端固定使用 `script.json`、`cover.<ext>`、`pack.zip` 作为对象 key。
 
 返回示例：
@@ -172,7 +172,7 @@ Content-Type: application/json
 }
 ```
 
-App 对每个文件执行 `PUT uploadUrl`，请求体为文件字节，并带上返回的 `headers`。预签名 URL 已包含权限，不需要额外 `Authorization`。
+App 对每个文件执行 `PUT uploadUrl`，请求体为文件流，并带上返回的 `headers`。预签名 URL 已包含权限，不需要额外 `Authorization`。App 端已按文件流上传，不会把大图包整体读入内存。
 
 ### 发布作品
 

@@ -55,7 +55,7 @@ function loadConfig(env = process.env) {
     ),
     downloadTtlSeconds: readInt(env.DOWNLOAD_TTL_SECONDS, 3600, 'DOWNLOAD_TTL_SECONDS'),
     deviceTokenTtlSeconds: readInt(env.DEVICE_TOKEN_TTL_SECONDS, 30 * 24 * 3600, 'DEVICE_TOKEN_TTL_SECONDS'),
-    maxUploadBytes: readInt(env.MAX_UPLOAD_BYTES, 32 * 1024 * 1024, 'MAX_UPLOAD_BYTES'),
+    maxUploadBytes: readInt(env.MAX_UPLOAD_BYTES, 512 * 1024 * 1024, 'MAX_UPLOAD_BYTES'),
     rateLimitPerMinute: readInt(env.RATE_LIMIT_PER_MINUTE, 120, 'RATE_LIMIT_PER_MINUTE'),
     trustProxy: String(env.TRUST_PROXY || '1') === '1',
   };
