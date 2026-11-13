@@ -1,0 +1,18 @@
+{
+  "name": "yedu-qiniu-signer",
+  "version": "1.0.0",
+  "private": true,
+  "description": "夜读七牛云上传 Token 与私有下载签名服务",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "qiniu": "^7.14.0"
+  }
+}
