@@ -1,19 +1,28 @@
 'use strict';
 
 const { loadConfig } = require('./config');
-const { createQiniuService } = require('./qiniuService');
+const { createStorageService } = require('./storageService');
+const { createDatabase } = require('./db');
+const { createWorkRepository } = require('./workRepository');
 const { createApp } = require('./app');
 
 const config = loadConfig();
-const qiniuService = createQiniuService(config);
-const app = createApp(config, qiniuService);
+const storageService = createStorageService(config);
+const db = createDatabase(config.dbPath);
+const workRepository = createWorkRepository(db);
+const app = createApp(config, storageService, workRepository);
 const server = app.listen(config.port, () => {
-  console.log(`[yedu-signer] listening on :${config.port} bucket=${config.bucket} private=${config.privateBucket}`);
+  console.log(
+    `[yedu-signer] listening on :${config.port} driver=${storageService.driver} bucket=${config.bucket}`,
+  );
 });
 
 function shutdown(signal) {
   console.log(`[yedu-signer] ${signal}, shutting down`);
-  server.close(() => process.exit(0));
+  server.close(() => {
+    db.close();
+    process.exit(0);
+  });
   setTimeout(() => process.exit(1), 10_000).unref();
 }
 

@@ -10,7 +10,7 @@ function createQiniuService(config) {
   function uploadToken(key) {
     const putPolicy = new qiniu.rs.PutPolicy({
       scope: `${config.bucket}:${key}`,
-      expires: config.uploadTokenTtlSeconds,
+      expires: config.uploadTtlSeconds,
       insertOnly: 0,
       fsizeLimit: config.maxUploadBytes,
       mimeLimit: 'image/*;application/json',
@@ -30,7 +30,19 @@ function createQiniuService(config) {
     return bucketManager.privateDownloadUrl(config.domain, key, expiresAt);
   }
 
-  return { uploadToken, downloadUrl };
+  function stat(key) {
+    return new Promise((resolve, reject) => {
+      bucketManager.stat(config.bucket, key, (err, body, info) => {
+        if (err) {
+          if (info && info.statusCode === 612) return resolve(null);
+          return reject(err);
+        }
+        resolve({ size: Number(body.fsize) || 0, contentType: body.mimeType || null });
+      });
+    });
+  }
+
+  return { uploadToken, downloadUrl, stat };
 }
 
 module.exports = { createQiniuService };
